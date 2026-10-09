@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050816">
+  <meta name="description" content="Kurkheda Game Zone — your next level starts here. Opening October 11.">
+  <title>Kurkheda Game Zone</title>
+  <style>
+    :root {
+      --bg: #050816;
+      --panel: rgba(10, 17, 42, .82);
+      --cyan: #00f5ff;
+      --pink: #ff2bd6;
+      --purple: #895bff;
+      --white: #f8fbff;
+      --muted: #b9c8e8;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--white);
+      background: var(--bg);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    button { font: inherit; }
+    .page {
+      min-height: 100svh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 26px 16px;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 28%, rgba(137,91,255,.24), transparent 44%),
+        radial-gradient(ellipse at 8% 85%, rgba(0,245,255,.14), transparent 38%),
+        radial-gradient(ellipse at 100% 70%, rgba(255,43,214,.12), transparent 36%),
+        var(--bg);
+    }
+    .grid {
+      position: absolute;
+      z-index: -2;
+      inset: -15% -40% -8%;
+      opacity: .62;
+      background-image:
+        linear-gradient(rgba(0,245,255,.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,245,255,.2) 1px, transparent 1px);
+      background-size: 42px 42px;
+      transform: perspective(560px) rotateX(58deg) scale(1.3);
+      transform-origin: center bottom;
+      animation: gridScroll 7s linear infinite;
+      mask-image: linear-gradient(to bottom, transparent 3%, #000 36%, #000 100%);
+    }
+    @keyframes gridScroll {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 0 42px, 42px 0; }
+    }
+    .shade {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(5,8,22,.1), rgba(5,8,22,.75));
+      pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 14px 3px rgba(0,245,255,.65);
+      animation: float 5s ease-in-out infinite;
+    }
+    .orb.a { top: 17%; left: 12%; }
+    .orb.b { top: 24%; right: 12%; background: var(--pink); box-shadow: 0 0 14px 3px rgba(255,43,214,.65); animation-delay: -1.6s; }
+    .orb.c { bottom: 18%; left: 20%; animation-delay: -3s; }
+    .orb.d { bottom: 22%; right: 17%; background: var(--pink); box-shadow: 0 0 14px 3px rgba(255,43,214,.65); animation-delay: -2s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(.8); opacity: .55; }
+      50% { transform: translateY(-22px) scale(1.25); opacity: 1; }
+    }
+    .card {
+      width: min(100%, 780px);
+      position: relative;
+      padding: clamp(25px, 6vw, 58px) clamp(17px, 5vw, 46px);
+      text-align: center;
+      border: 1px solid rgba(0,245,255,.42);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: 0 0 28px rgba(0,245,255,.13), 0 0 85px rgba(137,91,255,.09), inset 0 0 28px rgba(137,91,255,.08);
+      backdrop-filter: blur(12px);
+      animation: cardEnter .9s cubic-bezier(.2,.8,.2,1) both;
+    }
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(18px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tag {
+      margin: 0 0 18px;
+      color: var(--cyan);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 10vw, 6.1rem);
+      line-height: .95;
+      font-weight: 1000;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+      text-shadow: 0 0 10px rgba(0,245,255,.55), 0 0 35px rgba(255,43,214,.25);
+    }
+    h1 span {
+      display: block;
+      color: #fff;
+    }
+    .subtitle {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: clamp(.85rem, 3.1vw, 1.15rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+    }
+    .line {
+      width: min(230px, 65%);
+      height: 2px;
+      margin: 28px auto;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--pink), transparent);
+      box-shadow: 0 0 12px rgba(0,245,255,.5);
+    }
+    .date-label {
+      margin: 0;
+      color: var(--pink);
+      font-size: clamp(1.05rem, 4vw, 1.5rem);
+      font-weight: 950;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      text-shadow: 0 0 16px rgba(255,43,214,.25);
+    }
+    .location {
+      margin: 16px auto 0;
+      max-width: 500px;
+      color: #dce7ff;
+      line-height: 1.7;
+      font-size: clamp(.95rem, 3.2vw, 1.12rem);
+    }
+    .location .pin { color: var(--cyan); }
+    .buttons {
+      margin-top: 29px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .btn {
+      min-height: 48px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: #03121a;
+      background: var(--cyan);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 0 22px rgba(0,245,255,.2);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,245,255,.4); }
+    .btn:active { transform: translateY(0); }
+    .btn:focus-visible { outline: 3px solid white; outline-offset: 4px; }
+    .btn.secondary {
+      color: var(--white);
+      border-color: rgba(255,255,255,.25);
+      background: rgba(255,255,255,.06);
+      box-shadow: none;
+    }
+    .status {
+      min-height: 1.5em;
+      margin: 18px 0 0;
+      color: #a5f3fc;
+      font-size: .9rem;
+    }
+    .auto-voice-note {
+      margin: 28px 0 0;
+      color: var(--cyan);
+      font-size: .75rem;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+    .footer {
+      margin-top: 22px;
+      color: rgba(219,234,254,.55);
+      font-size: .72rem;
+      letter-spacing: .08em;
+    }
+    @media (max-width: 420px) {
+      .card { border-radius: 22px; }
+      .tag { letter-spacing: .18em; }
+      .buttons { flex-direction: column; }
+      .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="grid" aria-hidden="true"></div>
+    <div class="shade" aria-hidden="true"></div>
+    <span class="orb a" aria-hidden="true"></span>
+    <span class="orb b" aria-hidden="true"></span>
+    <span class="orb c" aria-hidden="true"></span>
+    <span class="orb d" aria-hidden="true"></span>
+
+    <section class="card" aria-labelledby="title">
+      <p class="tag">Get Ready • Game On</p>
+      <h1 id="title">Kurkheda <span>Game Zone</span></h1>
+      <p class="subtitle">YOUR NEXT LEVEL STARTS HERE</p>
+      <div class="line" aria-hidden="true"></div>
+      <p class="date-label">Opening • October 11</p>
+      <p class="location"><span class="pin">📍</span> Near Old Bank of India<br>Near Sai Stationery</p>
+
+      <p class="auto-voice-note">VOICE INTRO STARTS AUTOMATICALLY</p>
+      <p class="status" id="status" role="status" aria-live="polite">Welcome to the next level.</p>
+      <p class="footer">KURKHEDA GAME ZONE • LEVEL UP YOUR FUN</p>
+    </section>
+  </main>
+
+  <script>
+    const status = document.getElementById("status");
+
+    const lines = [
+      "Welcome to Kurkheda Game Zone.",
+      "Get ready. Your next level starts here.",
+      "Opening October eleventh.",
+      "Near Old Bank of India, near Sai Stationery.",
+      "Come and experience the game."
+    ];
+
+    function playIntro() {
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        status.textContent = "Voice playback is not supported by this browser.";
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      let index = 0;
+      status.textContent = "Playing intro…";
+
+      function sayNext() {
+        if (index >= lines.length) {
+          status.textContent = "Welcome to Kurkheda Game Zone!";
+          return;
+        }
+        const utterance = new SpeechSynthesisUtterance(lines[index++]);
+        utterance.lang = "en-IN";
+        utterance.rate = 0.92;
+        utterance.pitch = 1.05;
+        utterance.onend = sayNext;
+        utterance.onerror = () => {
+          status.textContent = "Voice could not play. Tap Replay Intro to try again.";
+        };
+        window.speechSynthesis.speak(utterance);
+      }
+
+      sayNext();
+    }
+
+    // Try to speak automatically when the page opens.
+    // Some mobile browsers block speech/audio until the visitor taps the page once.
+    window.addEventListener("load", () => {
+      window.setTimeout(() => {
+        playIntro();
+      }, 700);
+    });
+  </script>
+</body>
+</html>
